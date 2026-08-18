@@ -61,6 +61,13 @@ UI. One runs on the device, the other in the cloud.
 
 ---
 
+## Where things stand
+
+`docs/status.md` is the honest inventory: what works and how it was checked,
+what is designed but unbuilt, what is built but inert until a prerequisite is
+met, and which numbers are measured versus modelled. Read it before planning
+work on top of this.
+
 ## Quick start
 
 Pick the mode first; each has its own compose file under `deploy/`.

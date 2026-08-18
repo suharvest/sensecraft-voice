@@ -1,0 +1,132 @@
+default:
+  # 运行模式，可选 debug 和 release
+  mode: debug
+  # 服务监听端口
+  listen: 8090
+  # jwt 签名的 key
+  jwt_key: CHANGE_ME
+  # 自动创建指定模型的数据库表结构，不会更新已存在的数据库表
+  auto_migrate: true
+  # 日志的格式，可选 text 和 json
+  log_format: text
+  # 日志文件配置
+  log_file:
+    # 是否启用文件输出
+    enabled: false
+    # 日志文件路径
+    path: ./logs/app.log
+    # 日志文件最大大小(MB)
+    max_size: 100
+    # 保留的旧日志文件最大数量
+    max_backups: 3
+    # 保留的旧日志文件最大天数
+    max_age: 1
+    # 是否压缩旧日志文件
+    compress: true
+
+# 数据库地址信息
+mysql:
+  host: xx
+  user: xx
+  password: "CHANGE_ME"
+  port: 123
+  name: xx
+
+mqtt:
+  servers: [ "xx", ]
+  protocol: "3.1.1"
+  username: "default"
+  password: "CHANGE_ME"
+  keep_alive: 60
+  connection_timeout: "30s"
+  timeout: "30s"
+
+voice:
+  # 是否随服务启动自动开始录音
+  autoStart: true
+  # 为空使用系统默认输入设备
+  deviceId: ""
+  # 采样率（常用 16000 / 48000）
+  sampleRate: 16000
+  # 声道数（语音建议 1）
+  channels: 1
+  # 数据格式：pcm16 | opus（当前实现为 pcm16 原始流）
+  format: "wav"
+  # 输出方式：file | stream | both（当前实现为 file）
+  output: "stream"
+  # 输出文件路径（autoStart=true 时必填）
+  filePath: "./recordings/voice"
+  # 启动时软静音（丢弃采集帧但保持设备运行）
+  softMuteOnStart: false
+  # 设备丢失策略：stop | switch-default
+  onDeviceLost: "stop"
+  # 外部 ASR WebSocket 推流配置
+  wsUrl: "ws://127.0.0.1:8080/ws"
+  wsHeaders: {}
+  wsChunkBytes: 8192
+  wsMaxQueue: 64
+  wsMaxReconnectDelay: "15s"
+  
+  # ASR缓存配置
+  asr_cache:
+    # 是否启用ASR缓存
+    enabled: true
+    # 缓存目录
+    cache_dir: "./recordings/cache/asr"
+    # 最大重试次数
+    max_retries: 10
+    # 重试间隔
+    retry_interval: "5s"
+    # 缓存过期时间
+    cache_expiry: "168h"  # 一周 (7天 * 24小时)
+    # 最大缓存文件数量
+    max_cache_size: 1000
+    # 清理任务间隔
+    cleanup_interval: "1h"
+    
+    # HTTP批量上传配置
+    http_batch:
+      # 是否启用HTTP批量上传
+      enabled: true
+      # 批量大小
+      batch_size: 100
+      # 上传间隔
+      upload_interval: "5m"
+      # 最大重试次数
+      max_retry_attempts: 3
+      # 请求超时时间
+      timeout: "30s"
+
+# 远程服务配置
+remote:
+  # 远程服务地址
+  base_url: "http://voice-service.example.com:3008"
+  # 远程音频流配置
+  audio_stream:
+    # 是否启用远程音频流
+    enabled: true
+    # MAC 地址（留空则自动获取）
+    mac_address: ""
+    # 请求头配置
+    headers: {}
+    # 数据块大小（字节）
+    chunk_bytes: 8192
+    # 最大队列大小
+    max_queue: 64
+    # 最大重连等待时间
+    max_reconnect_delay: "15s"
+
+# 音频文件上传配置
+audio_upload:
+  # 是否启用音频文件上传
+  enabled: true
+  # 扫描目录
+  scan_dir: "./voiceprints/audio_cache"
+  # MAC地址（留空则自动获取）
+  mac_address: ""
+  # 上传超时
+  timeout: "30s"
+  # 最大文件大小 (MB)
+  max_file_size: 50
+  # 最大并发上传数
+  max_concurrent: 3

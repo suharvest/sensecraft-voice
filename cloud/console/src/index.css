@@ -1,0 +1,541 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义全局样式 */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    height: 100%;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+  
+  #root {
+    height: 100%;
+  }
+}
+
+@layer components {
+  /* 自定义按钮样式 */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 border-primary-500 hover:border-primary-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+  
+  .btn-secondary {
+    @apply border-primary-300 text-primary-600 hover:bg-primary-50 font-medium px-4 py-2 rounded-lg transition-all duration-200;
+  }
+  
+  /* 自定义卡片样式 */
+  .card-primary {
+    @apply bg-white rounded-xl shadow-lg border border-primary-100 hover:shadow-xl transition-shadow duration-200;
+  }
+  
+  /* 自定义输入框样式 */
+  .input-primary {
+    @apply border-primary-200 focus:border-primary-500 focus:ring-primary-200 rounded-lg transition-all duration-200;
+  }
+  
+  /* 自定义表格样式 */
+  .table-primary {
+    @apply bg-white rounded-xl shadow-lg border border-primary-100 overflow-hidden;
+  }
+  
+  .table-row-hover {
+    @apply hover:bg-primary-50 hover:text-gray-900 transition-colors duration-200;
+  }
+}
+
+@layer utilities {
+  /* 自定义工具类 */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-600 to-primary-700 bg-clip-text text-transparent;
+  }
+  
+  .shadow-primary {
+    box-shadow: 0 4px 14px 0 rgba(140, 192, 32, 0.15);
+  }
+  
+  .shadow-primary-lg {
+    box-shadow: 0 10px 25px 0 rgba(140, 192, 32, 0.2);
+  }
+  
+  /* 悬停文字可见性优化 */
+  .hover-text-visible:hover {
+    color: #000000 !important;
+  }
+  
+  .hover-text-visible:hover * {
+    color: #000000 !important;
+  }
+  
+  /* 调试用 - 强制黑色文字 */
+  .debug-text-black,
+  .debug-text-black *,
+  .debug-text-black span,
+  .debug-text-black div {
+    color: #000000 !important;
+    background-color: #ffffff !important;
+    border: 1px solid #ff0000 !important;
+  }
+}
+
+/* Ant Design 样式覆盖 */
+.ant-btn-primary {
+  @apply bg-primary-500 border-primary-500;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  @apply bg-primary-600 border-primary-600;
+}
+
+.ant-table-thead > tr > th {
+  @apply bg-primary-50 border-primary-200 text-primary-700 font-semibold;
+}
+
+.ant-table-tbody > tr:hover > td {
+  @apply bg-primary-50;
+}
+
+/* 只对文字元素应用黑色，不影响图标 */
+.ant-table-tbody > tr:hover > td span:not(.anticon),
+.ant-table-tbody > tr:hover > td div:not(.anticon),
+.ant-table-tbody > tr:hover > td p:not(.anticon),
+.ant-table-tbody > tr:hover > td a:not(.anticon) {
+  color: #000000 !important;
+}
+
+.ant-pagination-item-active {
+  @apply border-primary-500;
+}
+
+.ant-pagination-item-active a {
+  @apply text-primary-500;
+}
+
+.ant-select-focused .ant-select-selector,
+.ant-select-open .ant-select-selector {
+  @apply border-primary-500 ring-primary-200;
+}
+
+.ant-input:focus,
+.ant-input-focused {
+  @apply border-primary-500 ring-primary-200;
+}
+
+.ant-card {
+  @apply border-primary-100;
+}
+
+.ant-card-head {
+  @apply border-primary-100;
+}
+
+.ant-menu-item-selected {
+  @apply bg-primary-100 text-primary-700;
+}
+
+.ant-menu-item:hover {
+  @apply bg-primary-50 text-primary-800;
+}
+
+/* 确保所有悬停状态下的文字可见性 */
+.ant-table-tbody > tr:hover .ant-tag {
+  border-color: #d1d5db;
+}
+
+.ant-table-tbody > tr:hover .text-primary-700 {
+  color: #567714 !important;
+}
+
+.ant-table-tbody > tr:hover .text-gray-600 {
+  color: #1f2937 !important;
+}
+
+.ant-table-tbody > tr:hover .text-blue-600 {
+  color: #1e40af !important;
+}
+
+/* 按钮在悬停背景上的可见性 */
+.ant-table-tbody > tr:hover .ant-btn-link {
+  color: #689a18 !important;
+}
+
+.ant-table-tbody > tr:hover .ant-btn-link:hover {
+  color: #567714 !important;
+}
+
+/* 强化表格悬停文字可见性 - 更高优先级，排除图标 */
+.ant-table-tbody > tr:hover > td span:not(.anticon),
+.ant-table-tbody > tr:hover > td div:not(.anticon),
+.ant-table-tbody > tr:hover > td p:not(.anticon),
+.ant-table-tbody > tr:hover > td a:not(.anticon) {
+  color: #000000 !important;
+}
+
+/* Ant Design 组件特定覆盖 */
+.ant-table-tbody > tr:hover .ant-tag {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+  color: #000000 !important;
+}
+
+.ant-table-tbody > tr:hover .font-medium {
+  color: #000000 !important;
+  font-weight: 600 !important;
+}
+
+.ant-table-tbody > tr:hover .font-mono {
+  color: #000000 !important;
+}
+
+/* 进度条容器在悬停时保持可见 */
+.ant-table-tbody > tr:hover .bg-gray-200 {
+  background-color: #e5e7eb !important;
+}
+
+.ant-table-tbody > tr:hover .bg-green-500 {
+  background-color: #10b981 !important;
+}
+
+.ant-table-tbody > tr:hover .bg-yellow-500 {
+  background-color: #f59e0b !important;
+}
+
+.ant-table-tbody > tr:hover .bg-red-500 {
+  background-color: #ef4444 !important;
+}
+
+/* 文字颜色类的强制覆盖，但排除图标 */
+.ant-table-tbody > tr:hover [class*="text-"]:not(.anticon) {
+  color: #000000 !important;
+}
+
+.ant-table-tbody > tr:hover .text-primary-700 {
+  color: #059669 !important;
+}
+
+.ant-table-tbody > tr:hover .text-blue-600 {
+  color: #1d4ed8 !important;
+}
+
+/* 操作图标按钮的悬停可见性 - 保持原色 */
+.ant-table-tbody > tr:hover .anticon,
+.ant-table-tbody > tr:hover .ant-btn .anticon,
+.ant-table-tbody > tr:hover .ant-btn-link .anticon {
+  opacity: 1 !important;
+  /* 不强制改变颜色，保持原有颜色 */
+}
+
+.ant-table-tbody > tr:hover .ant-btn:hover .anticon,
+.ant-table-tbody > tr:hover .ant-btn-link:hover .anticon {
+  color: #000000 !important;
+}
+
+/* 确保操作按钮本身可见 */
+.ant-table-tbody > tr:hover .ant-btn,
+.ant-table-tbody > tr:hover .ant-btn-link {
+  color: #000000 !important;
+  border-color: #d1d5db !important;
+  background-color: transparent !important;
+}
+
+.ant-table-tbody > tr:hover .ant-btn:hover,
+.ant-table-tbody > tr:hover .ant-btn-link:hover {
+  color: #000000 !important;
+  border-color: #059669 !important;
+  background-color: #ecfdf5 !important;
+}
+
+/* 特定操作图标颜色 - 允许hover覆盖 */
+.ant-table-tbody > tr:hover .text-green-600:not(:hover),
+.ant-table-tbody > tr:hover .text-green-600:not(:hover) .anticon {
+  color: #059669 !important;
+}
+
+/* 按钮悬停时强制使用黑色文字 - 最高优先级 */
+.ant-table-tbody > tr:hover td:last-child .ant-btn.text-green-600:hover,
+.ant-table-tbody > tr:hover td:last-child .ant-btn.text-green-600:hover .anticon,
+.ant-table-tbody > tr:hover .ant-space .ant-btn.text-green-600:hover,
+.ant-table-tbody > tr:hover .ant-space .ant-btn.text-green-600:hover .anticon {
+  color: #111827 !important; /* gray-900 */
+}
+
+.ant-table-tbody > tr:hover .text-red-600,
+.ant-table-tbody > tr:hover .text-red-600 .anticon {
+  color: #dc2626 !important;
+}
+
+.ant-table-tbody > tr:hover .text-primary-600,
+.ant-table-tbody > tr:hover .text-primary-600 .anticon {
+  color: #059669 !important;
+}
+
+.ant-table-tbody > tr:hover .text-gray-500,
+.ant-table-tbody > tr:hover .text-gray-500 .anticon {
+  color: #000000 !important;
+}
+
+/* 保持操作图标的原始颜色 - 但允许按钮悬停时覆盖 */
+.ant-table-tbody > tr:hover .text-green-600:not(.ant-btn:hover) .anticon {
+  color: #16a34a !important; /* green-600 */
+}
+
+.ant-table-tbody > tr:hover .text-blue-600 .anticon {
+  color: #2563eb !important; /* blue-600 */
+}
+
+.ant-table-tbody > tr:hover .text-primary-600 .anticon {
+  color: #8CC020 !important; /* primary-600 */
+}
+
+.ant-table-tbody > tr:hover .text-red-500 .anticon {
+  color: #ef4444 !important; /* red-500 */
+}
+
+/* 按钮组合的悬停状态 */
+.ant-table-tbody > tr:hover .hover\\:text-primary-700:hover,
+.ant-table-tbody > tr:hover .hover\\:text-primary-700:hover .anticon {
+  color: #047857 !important;
+}
+
+.ant-table-tbody > tr:hover .hover\\:text-red-600:hover,
+.ant-table-tbody > tr:hover .hover\\:text-red-600:hover .anticon {
+  color: #dc2626 !important;
+}
+
+.ant-table-tbody > tr:hover .hover\\:text-primary-600:hover,
+.ant-table-tbody > tr:hover .hover\\:text-primary-600:hover .anticon {
+  color: #047857 !important;
+}
+
+/* 组内隐藏/显示的编辑按钮 */
+.ant-table-tbody > tr:hover .group-hover\\:opacity-100,
+.ant-table-tbody > tr:hover .opacity-0 {
+  opacity: 1 !important;
+  color: #000000 !important;
+}
+
+.ant-table-tbody > tr:hover .group-hover\\:opacity-100:hover,
+.ant-table-tbody > tr:hover .opacity-0:hover {
+  color: #059669 !important;
+}
+
+/* 最强力的操作列图标可见性保证 - 保持原色 */
+.ant-table-tbody > tr:hover td[data-key="action"] .anticon:not(.ant-btn:hover .anticon),
+.ant-table-tbody > tr:hover td:last-child .anticon:not(.ant-btn:hover .anticon),
+.ant-table-tbody > tr:hover .ant-space .anticon:not(.ant-btn:hover .anticon) {
+  opacity: 1 !important;
+  font-size: 14px !important;
+  /* 不强制改变颜色，让图标保持原有的颜色 */
+}
+
+.ant-table-tbody > tr:hover td[data-key="action"] .ant-btn:not(.text-green-600):hover .anticon,
+.ant-table-tbody > tr:hover td:last-child .ant-btn:not(.text-green-600):hover .anticon,
+.ant-table-tbody > tr:hover .ant-space .ant-btn:not(.text-green-600):hover .anticon {
+  color: #059669 !important;
+  transform: scale(1.1) !important;
+  transition: all 0.2s ease !important;
+}
+
+/* 确保操作按钮容器可见 */
+.ant-table-tbody > tr:hover .ant-space,
+.ant-table-tbody > tr:hover .ant-space .ant-btn {
+  opacity: 1 !important;
+}
+
+/* 最终覆盖：确保绿色按钮悬停时文字和图标都是黑色 */
+.ant-table-tbody > tr:hover .ant-btn.text-green-600.hover\:text-gray-900:hover,
+.ant-table-tbody > tr:hover .ant-btn.text-green-600.hover\:text-gray-900:hover span,
+.ant-table-tbody > tr:hover .ant-btn.text-green-600.hover\:text-gray-900:hover .anticon {
+  color: #111827 !important;
+}
+
+/* Tooltip 全局样式覆盖 - 确保文字可见性 */
+.ant-tooltip {
+  z-index: 9999 !important;
+}
+
+.ant-tooltip-inner {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  padding: 6px 8px !important;
+  border-radius: 6px !important;
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05) !important;
+  min-height: 24px !important;
+  line-height: 1.4 !important;
+}
+
+.ant-tooltip-arrow {
+  display: block !important;
+}
+
+.ant-tooltip-arrow::before {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+}
+
+/* 确保 Tooltip 在所有容器上方显示 */
+.ant-tooltip-placement-top .ant-tooltip-arrow::before,
+.ant-tooltip-placement-topLeft .ant-tooltip-arrow::before,
+.ant-tooltip-placement-topRight .ant-tooltip-arrow::before {
+  border-top-color: #000000 !important;
+}
+
+.ant-tooltip-placement-bottom .ant-tooltip-arrow::before,
+.ant-tooltip-placement-bottomLeft .ant-tooltip-arrow::before,
+.ant-tooltip-placement-bottomRight .ant-tooltip-arrow::before {
+  border-bottom-color: #000000 !important;
+}
+
+.ant-tooltip-placement-left .ant-tooltip-arrow::before,
+.ant-tooltip-placement-leftTop .ant-tooltip-arrow::before,
+.ant-tooltip-placement-leftBottom .ant-tooltip-arrow::before {
+  border-left-color: #000000 !important;
+}
+
+.ant-tooltip-placement-right .ant-tooltip-arrow::before,
+.ant-tooltip-placement-rightTop .ant-tooltip-arrow::before,
+.ant-tooltip-placement-rightBottom .ant-tooltip-arrow::before {
+  border-right-color: #000000 !important;
+}
+
+/* 确保 Tooltip 文字在任何背景上都清晰可见 */
+.ant-tooltip-inner * {
+  color: #ffffff !important;
+  text-shadow: none !important;
+}
+
+/* 自定义滚动条样式 */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #8CC020 #f1f5f9;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #8CC020;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #6b9a1a;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: #5a7f16;
+}
+
+/* 针对彩色 Tooltip 的特殊处理 */
+.ant-tooltip.ant-tooltip-red .ant-tooltip-inner {
+  background-color: #ff4d4f !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-pink .ant-tooltip-inner {
+  background-color: #eb2f96 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-orange .ant-tooltip-inner {
+  background-color: #fa8c16 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-yellow .ant-tooltip-inner {
+  background-color: #fadb14 !important;
+  color: #000000 !important;
+}
+
+.ant-tooltip.ant-tooltip-green .ant-tooltip-inner {
+  background-color: #52c41a !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-blue .ant-tooltip-inner {
+  background-color: #1677ff !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-cyan .ant-tooltip-inner {
+  background-color: #13c2c2 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-purple .ant-tooltip-inner {
+  background-color: #722ed1 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-geekblue .ant-tooltip-inner {
+  background-color: #2f54eb !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-magenta .ant-tooltip-inner {
+  background-color: #eb2f96 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-volcano .ant-tooltip-inner {
+  background-color: #fa541c !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-gold .ant-tooltip-inner {
+  background-color: #faad14 !important;
+  color: #ffffff !important;
+}
+
+.ant-tooltip.ant-tooltip-lime .ant-tooltip-inner {
+  background-color: #a0d911 !important;
+  color: #000000 !important;
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-in-out;
+}

@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  sensecraft-voice-client:
+    image: registry.example.com/respeaker/sensecraft-voice-client:latest-arm64
+    container_name: sensecraft-voice-client-cm4
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./config.yaml:/etc/sensecraft-voice/config.yaml:ro
+      - ./recordings:/app/recordings
+      - ./logs:/app/logs
+    environment:
+      - TZ=Asia/Shanghai
+    # CM4特定优化
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+    # 网络配置
+    networks:
+      - voice-network
+
+networks:
+  voice-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

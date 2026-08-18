@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  sensecraft-voice-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+      args:
+        - NODE_ENV=production
+    image: registry.example.com/sensecraft-ai/sensecraft-voice-web:latest
+    container_name: sensecraft-voice-web
+    ports:
+      - "3009:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - sensecraft-network
+
+  sensecraft-voice-service:
+    image: registry.example.com/sensecraft-ai/sensecraft-voice-service:test-2025082900
+    container_name: sensecraft-voice-service
+    ports:
+      - "3008:3008"
+    restart: unless-stopped
+    networks:
+      - sensecraft-network
+
+networks:
+  sensecraft-network:
+    driver: bridge
+
+
+docker run -d \
+  --name sensecraft-voice-web \
+  -p 3010:3000 \
+  --restart unless-stopped \
+  registry.example.com/sensecraft-ai/sensecraft-voice-web:latest

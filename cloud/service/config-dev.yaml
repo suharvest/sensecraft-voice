@@ -1,0 +1,122 @@
+default:
+  # 运行模式，可选 debug 和 release
+  mode: debug
+  # 服务监听端口
+  listen: 3008
+  # jwt 签名的 key
+  jwt_key: CHANGE_ME
+  # 设备首次注册的共享密钥（请求头 X-Enrollment-Key），部署时替换为真实值
+  enrollment_key: "CHANGE_ME_ENROLLMENT_KEY"
+  # true = 设备侧接口强制校验凭证；固件全量升级前保持 false（无凭证放行并记 warning）
+  device_auth_enforce: false
+  # 敏感字段落库加密的主密钥（AES-GCM），用于 asr_servers.api_key，部署时替换为真实值
+  crypto_master_key: "CHANGE_ME_CRYPTO_MASTER_KEY"
+  # 设备心跳间隔（秒），在线判定窗口为 3 倍该值
+  device_heartbeat_interval_seconds: 60
+  # 自动创建指定模型的数据库表结构，不会更新已存在的数据库表
+  auto_migrate: true
+  # 服务器基础URL（用于生成完整的API链接）
+  base_url: "https://api.example.com"
+  # 日志的格式，可选 text 和 json
+  log_format: text
+  # 日志文件配置
+  log_file:
+    # 是否启用文件输出
+    enabled: false
+    # 日志文件路径
+    path: ./logs/app.log
+    # 日志文件最大大小(MB)
+    max_size: 100
+    # 保留的旧日志文件最大数量
+    max_backups: 3
+    # 保留的旧日志文件最大天数
+    max_age: 7
+    # 是否压缩旧日志文件
+    compress: true
+  # HTTP服务器配置
+  http:
+    # 读取超时时间(秒) - 设置为比MinIO超时更长
+    read_timeout: 180
+    # 写入超时时间(秒) - 设置为比MinIO超时更长
+    write_timeout: 180
+    # 空闲超时时间(秒)
+    idle_timeout: 300
+    # 读取头部超时时间(秒)
+    read_header_timeout: 30
+
+# 数据库地址信息
+mysql:
+  host: 119.147.208.104
+  user: root
+  password: "CHANGE_ME"
+  port: 41030
+  name: sensecraft_voice
+
+mqtt:
+  servers: [ "xx" ]
+  protocol: "3.1.1"
+  username: "default"
+  password: "CHANGE_ME"
+  keep_alive: 60
+  connection_timeout: 30
+  timeout: 30
+
+# 聊天服务配置
+chat:
+  # Dify API 基础地址
+  base_url: "https://dify.example.com"
+  # API 密钥
+  api_key: "CHANGE_ME"
+  # 请求超时时间（秒）
+  timeout: 60
+  # 是否启用调试模式
+  enable_debug: false
+
+# Seeed API配置
+seeed:
+  # Seeed API 基础地址
+  base_url: "https://api.example.com"
+  # 固定秘钥（由IT部门提供）
+  secret_key: "CHANGE_ME"
+  # 请求超时时间（秒）
+  timeout: 30
+
+# OpenAI API配置
+openai:
+  # OpenAI API 密钥
+  api_key: "CHANGE_ME"
+  # API 基础地址
+  base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+  # 请求超时时间（秒）
+  timeout: 120
+  # 最大token数量
+  max_tokens: 8192
+  # 温度参数
+  temperature: 0.7
+  # 默认模型
+  model: "qwen-long-latest"
+
+# OSS文件存储配置
+oss:
+  # MinIO存储配置
+  minio:
+    endpoint: "119.147.208.104:41032"
+    access_key: "CHANGE_ME"
+    secret_key: "CHANGE_ME"
+    use_ssl: false
+    bucket_name: "sensecraft-voice"
+    region: "us-east-1"
+    timeout: 150
+  
+  # 文件处理配置
+  processing:
+    max_file_size: 10485760  # 10MB
+
+# ASR 服务器健康探测配置
+asr:
+  # 探测 cron 表达式
+  probe_schedule: "*/1 * * * *"
+  # 单次探测超时（秒）
+  probe_timeout_seconds: 5
+  # 连续失败多少次才置 status=down（OVS 转写高峰期探测超时属正常现象）
+  probe_fail_threshold: 5

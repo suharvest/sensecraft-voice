@@ -1,0 +1,36 @@
+# Mode A — ASR runs ON the device.
+# The agent and an OpenVoiceStream instance share one box; the agent's ASR
+# endpoint points at localhost. Suited to a reRouter CM4 or a Pi with a mic
+# array. Throughput is bounded by that board's CPU, so keep admission at one
+# session (see the profile below).
+services:
+  asr:
+    # OpenVoiceStream is a separate project; pin a tag you have tested.
+    image: ${OVS_IMAGE:?e.g. ghcr.io/suharvest/openvoicestream:TAG}
+    environment:
+      OVS_PROFILE: ${OVS_PROFILE:-rpi5-sensevoice}
+      OVS_API_KEYS: ${OVS_API_KEYS:?generate one; without it the port is open}
+      HF_ENDPOINT: ${HF_ENDPOINT:-https://huggingface.co}
+    volumes: ["ovs-models:/opt/models"]
+    ports: ["8621:8621"]
+    healthcheck:
+      # /livez, NOT /readyz: readiness includes "the limiter has spare
+      # capacity", so on a one-slot board every in-flight decode reads as 503
+      # and the container would be restarted mid-request.
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8621/livez"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped
+
+  agent:
+    build: { context: ../../device/agent }
+    depends_on: [asr]
+    privileged: true          # microphone access
+    devices: ["/dev/snd:/dev/snd"]
+    network_mode: host        # the agent serves its own config page on :8090
+    volumes: ["../../device/agent/config.yaml:/app/config.yaml:ro"]
+    restart: unless-stopped
+
+volumes: { ovs-models: {} }

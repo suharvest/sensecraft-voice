@@ -1,0 +1,26 @@
+# Mode B — one ASR server on the LAN, many devices.
+# Run this file ON THE ASR SERVER. Devices run only the agent (see agent.yml)
+# and point their ASR endpoint at this host.
+services:
+  asr:
+    image: ${OVS_IMAGE:?e.g. ghcr.io/suharvest/openvoicestream:TAG}
+    environment:
+      OVS_PROFILE: ${OVS_PROFILE:-jetson-sensevoice}
+      OVS_API_KEYS: ${OVS_API_KEYS:?generate one; without it the port is open}
+      HF_ENDPOINT: ${HF_ENDPOINT:-https://huggingface.co}
+      # Admission ceiling, not parallelism: the backend still decodes one clip
+      # at a time, but extra callers queue instead of getting a 429. Measured
+      # on an Orin Nano, 4 slots took 429s from 15 to 0 with a latency ladder
+      # of roughly 60/112/162/212 ms.
+      SENSEVOICE_MAX_CONCURRENT: ${ASR_MAX_SLOTS:-4}
+    volumes: ["ovs-models:/opt/models"]
+    ports: ["8621:8621"]
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8621/livez"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 120s
+    restart: unless-stopped
+
+volumes: { ovs-models: {} }

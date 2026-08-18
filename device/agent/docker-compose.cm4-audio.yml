@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  sensecraft-voice-client:
+    image: registry.example.com/respeaker/sensecraft-voice-client:v0.1
+    container_name: sensecraft-voice-client
+    restart: unless-stopped
+    
+    # 网络配置
+    network_mode: host
+    
+    # 权限配置
+    privileged: true
+    group_add:
+      - audio
+      - video
+    cap_add:
+      - SYS_ADMIN
+      - SYS_RAWIO
+      - NET_ADMIN
+    
+    # 设备挂载
+    devices:
+      - /dev/snd:/dev/snd
+      - /dev/bus/usb:/dev/bus/usb
+    
+    # 环境变量
+    environment:
+      - TZ=Asia/Shanghai
+      - AUDIODEV=hw:0,0
+      - ALSA_PCM=hw:0,0
+      - ALSA_CARD=hw:0,0
+      - PULSE_SERVER=unix:${XDG_RUNTIME_DIR}/pulse/native
+      - DISPLAY=${DISPLAY}
+    
+    # 卷挂载
+    volumes:
+      - /dev:/dev
+      - /run/udev:/run/udev:ro
+      - /proc:/proc:ro
+      - /sys:/sys:ro
+      - /data-iot/respeaker/recordings:/app/recordings
+      - /data-iot/respeaker/config.yaml:/etc/sensecraft-voice/config.yaml
+      - /data-iot/respeaker/web:/app/web
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+        reservations:
+          memory: 512M
+    
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/v1/voice/device/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

@@ -1,0 +1,73 @@
+audio_upload:
+    enabled: true
+    mac_address: ""
+    max_concurrent: 3
+    max_file_size: 50
+    scan_dir: ./voiceprints/audio_cache
+    timeout: 30s
+default:
+    auto_migrate: true
+    jwt_key: CHANGE_ME
+    listen: 8090
+    log_file:
+        compress: true
+        enabled: false
+        max_age: 1
+        max_backups: 3
+        max_size: 100
+        path: ./logs/app.log
+    log_format: text
+    mode: debug
+mqtt:
+    connection_timeout: 30s
+    keep_alive: 60
+    password: "CHANGE_ME"
+    protocol: 3.1.1
+    servers:
+        - xx
+    timeout: 30s
+    username: default
+mysql:
+    host: xx
+    name: xx
+    password: "CHANGE_ME"
+    port: 123
+    user: xx
+remote:
+    audio_stream:
+        chunk_bytes: 8192
+        enabled: true
+        headers: {}
+        mac_address: ""
+        max_queue: 64
+        max_reconnect_delay: 15s
+    base_url: http://voice-service.example.com:3008
+voice:
+    asr_cache:
+        cache_dir: ./recordings/cache/asr
+        cache_expiry: 24h
+        cleanup_interval: 1h
+        enabled: true
+        http_batch:
+            batch_size: 100
+            enabled: true
+            max_retry_attempts: 3
+            timeout: 30s
+            upload_interval: 5m
+        max_cache_size: 1000
+        max_retries: 5
+        retry_interval: 30s
+    autoStart: true
+    channels: 1
+    deviceId: ""
+    filePath: ./recordings/voice
+    format: wav
+    onDeviceLost: switch-default
+    output: stream
+    sampleRate: 16000
+    softMuteOnStart: false
+    wsChunkBytes: 8192
+    wsHeaders: {}
+    wsMaxQueue: 64
+    wsMaxReconnectDelay: 15s
+    wsUrl: ws://192.168.118.99:8080/ws

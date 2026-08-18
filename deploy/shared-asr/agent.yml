@@ -1,0 +1,10 @@
+# Mode B, device side. Run this on each device.
+# ASR_BASE_URL points at the shared server from deploy/shared-asr/docker-compose.yml.
+services:
+  agent:
+    build: { context: ../../device/agent }
+    privileged: true
+    devices: ["/dev/snd:/dev/snd"]
+    network_mode: host
+    volumes: ["../../device/agent/config.yaml:/app/config.yaml:ro"]
+    restart: unless-stopped

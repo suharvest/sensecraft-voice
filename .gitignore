@@ -1,0 +1,60 @@
+# --- Secrets / local environment ------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+!**/testdata/*.key
+
+# --- Node / frontend -------------------------------------------------------
+node_modules/
+dist/
+build/
+.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Go / compiled binaries ------------------------------------------------
+# The upstream repo committed a 53 MB macOS binary; keep build output out.
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+*.a
+/cloud/service/sensecraft-voice-service
+/cloud/service/sensecraftVoice
+/device/agent/sensecraft-voice-client
+/device/agent/sensecraftVoice
+bin/
+vendor/
+
+# --- Logs / runtime artifacts ---------------------------------------------
+logs/
+*.log
+*.pid
+tmp/
+.cache/
+
+# --- Editors / OS ----------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db

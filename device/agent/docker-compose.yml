@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  sensecraft-voice-client:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${VERSION:-latest}
+        CLIENT_VERSION: ${CLIENT_VERSION:-v0.0.1}
+    image: sensecraft-voice-client:${VERSION:-latest}
+    container_name: sensecraft-voice-client
+    privileged: true
+    devices:
+      - /dev/snd:/dev/snd
+    group_add:
+      - audio
+    environment:
+      - ClientVersion=${CLIENT_VERSION:-v0.0.1}
+      - AUDIODEV=hw:0,0
+      - ALSA_PCM=hw:0,0
+      - ALSA_CARD=hw:0,0
+    ports:
+      - "8090:8090"
+    volumes:
+      # 挂载配置文件（如果需要）
+      - ./config.yaml:/etc/sensecraft-voice/config.yaml:ro
+      # 挂载日志目录
+      - ./logs:/app/logs
+      # 挂载录音文件目录
+      - ./recordings:/app/recordings
+    restart: unless-stopped
+    networks:
+      - sensecraft-network
+
+  # 模拟远程设备注册服务（用于测试）
+  mock-device-register:
+    image: mockserver/mockserver:latest
+    container_name: mock-device-register
+    ports:
+      - "8081:1080"
+    environment:
+      MOCKSERVER_PROPERTY_FILE: /config/mockserver.properties
+    volumes:
+      - ./mockserver:/config
+    restart: unless-stopped
+    networks:
+      - sensecraft-network
+
+networks:
+  sensecraft-network:
+    driver: bridge
